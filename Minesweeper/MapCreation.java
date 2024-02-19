@@ -1,8 +1,10 @@
 package Minesweeper;
 
+import java.util.InputMismatchException;
 import java.util.Random;
+import java.util.Scanner;
 
-public class Functions {
+public class MapCreation {
 
 //Create EASY map
 	public static char[][] easy() {
@@ -108,6 +110,58 @@ public class Functions {
 	        }
 			return map;
 		}
+		
+//Create custom map
+		public static char[][] custom() {
+			Scanner sc=new Scanner(System.in);
+			
+			try {			
+			//Asks and saves custom values
+				System.out.print("How wide do you want the map to be? (x axis). ");
+				int y_axis=sc.nextInt();
+				System.out.println();
+				System.out.print("How high do you want the map to be? (y axis). ");
+				int x_axis=sc.nextInt();
+				System.out.println();
+				System.out.print("how many mines should there be? ");
+				int mines=sc.nextInt();
+				System.out.println();
+				
+			//Create array
+				char[][] map=new char[x_axis][y_axis];
+				
+			//For random numbers
+				Random rand = new Random();
+				
+			//Go through array and create mines
+				for(int i=0;i<mines;i++) {
+					int row, col;
+					
+			//Generates random number and if in it's coords there is an 'x', generates new ones
+					do {
+		                row = rand.nextInt(x_axis);
+		                col = rand.nextInt(y_axis);
+		            } while (map[row][col] == 'x');
+			//places the mine
+		            map[row][col] = 'x';
+				}
+				
+			//Fill the empty cells
+				for (int i = 0; i < map.length; i++) {
+		            for (int j = 0; j < map[i].length; j++) {
+		                if (map[i][j] != 'x') {
+		                	 int count = NearbyMines(map, i, j);
+		                     map[i][j] = (char) (count + '0');
+		                }
+		            }
+		        }
+				return map;
+			} catch(InputMismatchException e) {
+				System.err.println("Invalid input. Please enter valid numeric values.");
+				return null;
+			}	
+		}
+		
 //Adds the number to the tiles 
 		public static int NearbyMines(char[][] map, int row, int col) {
 		    int amount = 0;
@@ -130,40 +184,6 @@ public class Functions {
 	            System.out.println();
 			}
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 }
