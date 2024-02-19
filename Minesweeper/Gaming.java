@@ -8,9 +8,16 @@ public class Gaming {
 	public static void gameMenu(char map[][]) {
 		Scanner sc=new Scanner(System.in);
 		boolean game=true;
+		char[][] usermap = new char[map.length][map[0].length];
+		for(int i=0;i<usermap.length;i++){
+			for(int j=0;j<usermap[i].length;j++){
+				usermap[i][j]='-';
+			}
+		}
+		//temp map to check if it came back null
+		char[][] tempmap = new char[map.length][map[0].length];
 		while(game==true) {
 			try {
-				char[][] usermap = new char[map.length][map[0].length];
 				//ask what they want to do and if it's not between 1 and 3 ask again
 				int action;
 				System.out.println("¿What do you want to do?");
@@ -18,6 +25,7 @@ public class Gaming {
 				System.out.println("2. Flag a mine.");
 				System.out.println("3. Leave the game.");
 				action=sc.nextInt();
+				System.out.println();
 				while(action>3 || action<1){
 					System.out.print("The number must be between 1 and 3, please try again. ");
 					action=sc.nextInt();
@@ -26,10 +34,22 @@ public class Gaming {
 				//switch for possible actions user might want to do
 				switch(action) {
 				case 1:
-					usermap=revealTile(usermap, map);
+					tempmap=revealTile(usermap, map); //add a temp array, so if it comes back as null the map is not lost?
+					if(tempmap!=null){
+						usermap=tempmap;
+					} else{
+						System.out.println("An error occurred while saving your last play.");
+						System.out.println();
+					}
 				break;
 				case 2:
-					usermap=flagMine(usermap, map);
+					tempmap=flagMine(usermap, map);
+					if(tempmap!=null){
+						usermap=tempmap;
+					} else{
+						System.out.println("An error occurred while saving your last play.");
+						System.out.println();
+					}
 				break;
 				case 3:
 					System.out.println("Leaving the game...");
@@ -45,18 +65,47 @@ public class Gaming {
 		}
 	}
 
+	//Reveal the value of a tile
 	public static char[][] revealTile(char usermap[][], char map[][]) {
 		Scanner sc=new Scanner(System.in);
-		
+		//maybe add a while so it doesn't exit if you are out of bounds or write a letter?
 		try {
+			System.out.print("In what row is the tile you want to reveal? ");
+			int row=sc.nextInt()-1;
+			System.out.print("In what column is the tile you want to reveal? ");
+			int col=sc.nextInt()-1;
+			System.out.println();
+
+		//if mines are depleted win screen +1 win
+		//Possibilities when revealing a mine
+			if(map[row][col]=='x'){ //Mine, you lost
+				usermap[row][col]=map[row][col];
+				System.err.println("BOOM!");
+				System.out.println("Seems like you hit a mine.");
+				//Add a loss
+
+			} else if (map[row][col]==0) { //0, check all around and reveal them
+				usermap[row][col]=map[row][col]; //Reveal all tiles in it's radius, careful with being out of bounds of the array
+
+			} else{ //Default, just reveal this tile
+				usermap[row][col]=map[row][col];
+			}
 			
+			//Print map
+			System.out.println();
+			MapCreation.PrintMap(usermap);
+			System.out.println();
 			return usermap;
-		} catch(InputMismatchException e) {
+		} catch(InputMismatchException e) { //Manage when receiving a null, so map is not lost
+			System.err.println("Invalid input. Please enter valid numeric values.");
+			return null;
+		} catch(ArrayIndexOutOfBoundsException e){
+			System.err.println("The coordinates are out of bounds, try again.");
 			return null;
 		}
 	}
 	
-	public static char[][] flagMine(char usermap[][], char map[][]) {
+	public static char[][] flagMine(char usermap[][], char map[][]) { //add a mine counter, and flag counter, if mines=0 win, if flags=0 and mines !=0 continue without saying
 		
 		
 		return usermap;
