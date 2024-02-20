@@ -150,9 +150,9 @@ public class Gaming {
 				System.out.println("Seems like you hit a mine.");
 				//Add a loss
 				fullMap.lost();
-			} else if (map[row][col]==0) { //0, check all around and reveal them
-				usermap[row][col]=map[row][col]; //Reveal all tiles in it's radius, careful with being out of bounds of the array
-				//Maybe add a function that reveals if it's 0? so it can be looped easier
+			} else if (map[row][col]=='0') { //0, check all around and reveal them
+				revealAdjacentTiles(usermap, map, row, col);
+				
 			} else{ //Default, just reveal this tile
 				usermap[row][col]=map[row][col];
 			}
@@ -274,6 +274,25 @@ public class Gaming {
 				System.out.print(map[i][j]+"\t");
 			}
 			System.out.println();
+		}
+	}
+
+	//Reveals adjacent tiles when it is 0 in the current tiles
+	public static void revealAdjacentTiles(char usermap[][], char map[][], int row, int col) {
+		if (row< 0||col<0||row>=usermap.length||col>=usermap[0].length||usermap[row][col]!='-') {
+			return; //If out of bounds or revealed, don't reveal
+		}
+		usermap[row][col] = map[row][col]; // Reveal the current tile
+		//calls this same function reveal adjacent tiles
+		if(map[row][col]=='0'){
+			revealAdjacentTiles(usermap, map, row-1, col);
+			revealAdjacentTiles(usermap, map, row+1, col);
+			revealAdjacentTiles(usermap, map, row, col-1);
+			revealAdjacentTiles(usermap, map, row, col+1);
+			revealAdjacentTiles(usermap, map, row-1, col-1);
+			revealAdjacentTiles(usermap, map, row-1, col+1);
+			revealAdjacentTiles(usermap, map, row+1, col-1);
+			revealAdjacentTiles(usermap, map, row+1, col+1);
 		}
 	}
 }
