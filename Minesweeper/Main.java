@@ -9,6 +9,8 @@ public class Main {
 	//ADD TRY CATCH TO EVERYTHING THAT CAN FAIL
 	//ADD Timer for scores (except for custom mode) and save it in .txt, and how many times played in each mode and stats of victories and defeats?
 	//Maybe add another main class that is the main of the main, so it has a switch for if you want to play or check scores, or stop playing?
+	//Create "user" class to save stats, so it can be saved as "user" object
+	//Change map creation to an object, so you call the constructor with the data you want to introduce
 	
 	public static void main(String[] args) {
 
@@ -29,6 +31,8 @@ public class Main {
 					System.out.println();
 				}
 				
+				MapCreation map = null; //Create variable outside
+				
 				switch(act) {
 				case 1:
 					//Boolean to loop again if failed
@@ -47,26 +51,33 @@ public class Main {
 								System.out.println();
 							}
 						//Switch to create map
-							char[][] map = null;
 							switch(dif) {
 							case 1:
-								map=MapCreation.easy();
+								map=new MapCreation(8, 10, 15);
 							break;
 							case 2:
-								map=MapCreation.medium();
+								map=new MapCreation(14, 18, 40);
 							break;
 							case 3:
-								map=MapCreation.hard();
+								map=new MapCreation(20, 24, 100);
 							break;
 							case 4:
-								map=MapCreation.custom();
+								System.out.print("How many rows do you want the map to have? ");
+								int rows=sc.nextInt();
+								System.out.println();
+								System.out.print("How columns do you want the map to have? ");
+								int cols=sc.nextInt();
+								System.out.println();
+								System.out.print("how many mines should there be? ");
+								int mines=sc.nextInt();
+								map=new MapCreation(rows, cols, mines);
 							break;
 							}
 							//If map is valid it prints it
 							if(map != null) {
-								MapCreation.PrintMap(map);
+								map.PrintMap();
 								loopy=false;
-								Gaming.gameMenu(map); //Maybe need to push map[][] to use it inside
+								Gaming.gameMenu(map.getMap()); //Maybe need to push map[][] to use it inside
 							} else {
 								System.out.println("Map creation failed.");
 								System.out.println();

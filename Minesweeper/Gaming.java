@@ -33,8 +33,8 @@ public class Gaming {
 				System.out.println("4. Leave the game.");
 				action=sc.nextInt();
 				System.out.println();
-				while(action>3 || action<1){
-					System.out.print("The number must be between 1 and 3, please try again. ");
+				while(action>4 || action<1){
+					System.out.print("The number must be between 1 and 4, please try again. ");
 					action=sc.nextInt();
 					System.out.println();
 				}
@@ -60,7 +60,7 @@ public class Gaming {
 					}
 				break;
 				case 3: //Prints map data
-					System.out.println("The minefield contains "+map.length+" rows, "+map[0].length+" columns,  "+mines+" mines, and you have "+flags+" flags left.");
+					System.out.println("The minefield has "+map.length+" rows, "+map[0].length+" columns, "+mines+" mines, and you have "+flags+" flags left.");
 					System.out.println();
 				break;
 				case 4:
@@ -104,7 +104,7 @@ public class Gaming {
 			
 			//Print map
 			System.out.println();
-			MapCreation.PrintMap(usermap);
+			PrintMap(usermap);
 			System.out.println();
 			return usermap;
 			//Catch errors
@@ -135,5 +135,14 @@ public class Gaming {
 			}
 		}
 		return mines;
+	}
+	
+	public static void PrintMap(char map[][]) {
+		for(int i=0;i<map.length;i++){
+			for(int j=0;j<map[i].length;j++){
+				System.out.print(map[i][j]+"\t");
+			}
+			System.out.println();
+		}
 	}
 }
