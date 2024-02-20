@@ -90,12 +90,8 @@ public class Main {
 				System.err.println("Invalid input. Please enter valid numeric values.");
 				System.out.println();
 				sc.nextLine();
-			}finally{
-				sc.close();
 			}
 		}
-		
-		
 	}
 
 }

@@ -159,8 +159,6 @@ public class MapCreation {
 			} catch(InputMismatchException e) {
 				System.err.println("Invalid input. Please enter valid numeric values.");
 				return null;
-			}finally{
-				sc.close();
 			}
 		}
 		

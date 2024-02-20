@@ -72,10 +72,7 @@ public class Gaming {
 				System.err.println("Invalid input. Please enter valid numeric values.");
 				System.out.println();
 				sc.nextLine();
-			}finally{
-				sc.close();
 			}
-
 		}
 	}
 
@@ -117,8 +114,6 @@ public class Gaming {
 		} catch(ArrayIndexOutOfBoundsException e){
 			System.err.println("The coordinates are out of bounds, try again.");
 			return null;
-		} finally{
-			sc.close();
 		}
 	}
 	
