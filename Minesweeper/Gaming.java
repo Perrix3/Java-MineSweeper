@@ -29,12 +29,13 @@ public class Gaming {
 				System.out.println("¿What do you want to do?");
 				System.out.println("1. Reveal a tile.");
 				System.out.println("2. Flag a mine.");
-				System.out.println("3. Remind information.");
-				System.out.println("4. Leave the game.");
+				System.out.println("3. Remove flag from tile.");
+				System.out.println("4. Remind information.");
+				System.out.println("5. Leave the game.");
 				action=sc.nextInt();
 				System.out.println();
-				while(action>4 || action<1){
-					System.out.print("The number must be between 1 and 4, please try again. ");
+				while(action>5 || action<1){
+					System.out.print("The number must be between 1 and 5, please try again. ");
 					action=sc.nextInt();
 					System.out.println();
 				}
@@ -45,25 +46,53 @@ public class Gaming {
 					if(tempmap!=null){
 						usermap=tempmap;
 					} else{
-						System.out.println("An error occurred while saving your last play.");
+						System.out.println("That tile was flagged or an error occurred while saving your last play.");
 						System.out.println();
 					}
 				break;
 				case 2: //Flags a mine
-					tempmap=flagMine(usermap, fullMap.getMap(), fullMap);
+					System.out.print("In what row is the tile you want to flag a mine? ");
+					int row=sc.nextInt()-1;
+					System.out.print("In what column is the tile you want to flag a mine? ");
+					int col=sc.nextInt()-1;
+					System.out.println();
+					tempmap=flagMine(usermap, fullMap.getMap(), fullMap, flags, row, col);
 					if(tempmap!=null){
 						usermap=tempmap;
 						flags--;
+						if (fullMap.getMap()[row][col]=='x') {
+							//TrueMines
+						}
 					} else{
-						System.out.println("An error occurred while saving your last play.");
+						System.out.println("That tile couldn't be flagged or an error occurred while saving your last play.");
 						System.out.println();
 					}
 				break;
-				case 3: //Prints map data
+				case 3: //unflag
+					System.out.print("In what row is the tile you want to remove the flag from? ");
+					int roww=sc.nextInt()-1;
+					System.out.print("In what column is the tile you want to remove the flag from? ");
+					int coll=sc.nextInt()-1;
+					System.out.println();
+					tempmap = unFlagTile(usermap, flags, roww, coll);
+					if(tempmap!=null){
+						usermap=tempmap;
+						flags++;
+						if (fullMap.getMap()[roww][coll]=='x') {
+							//Add a TrueMine
+						}
+					} else{
+						System.out.println("Wasn't able to remove a flag from that tile or an error occurred while saving your last play.");
+						System.out.println();
+					}
+				break;
+				case 4: //Prints map data
 					System.out.println("The minefield has "+fullMap.getRows()+" rows, "+fullMap.getColumns()+" columns, "+mines+" mines, and you have "+flags+" flags left.");
 					System.out.println();
+					PrintMap(usermap);
+					System.out.println();
 				break;
-				case 4:
+				case 5:
 					System.out.println("Leaving the game...");
 					game=false;
 				break;
@@ -87,6 +116,7 @@ public class Gaming {
 		Scanner sc=new Scanner(System.in);
 		//maybe add a while so it doesn't exit if you are out of bounds or write a letter?
 		try {
+			boolean flagged=false;
 			System.out.print("In what row is the tile you want to reveal? ");
 			int row=sc.nextInt()-1;
 			System.out.print("In what column is the tile you want to reveal? ");
@@ -95,7 +125,10 @@ public class Gaming {
 
 		//if mines are depleted win screen +1 win
 		//Possibilities when revealing a mine
-			if(map[row][col]=='x'){ //Mine, you lost
+			if(usermap[row][col]=='M'){//if flagged, can't be revealed
+				System.out.println("You can't reveal flagged tiles, please remove the flag before.");
+				flagged=true;
+			}else if(map[row][col]=='x'){ //Mine, you lost
 				usermap[row][col]=map[row][col];
 				System.err.println("BOOM!");
 				System.out.println("Seems like you hit a mine.");
@@ -109,10 +142,14 @@ public class Gaming {
 			}
 			
 			//Print map
-			System.out.println();
-			PrintMap(usermap);
-			System.out.println();
-			return usermap;
+			if(flagged==false){
+				System.out.println();
+				PrintMap(usermap);
+				System.out.println();
+				return usermap;
+			} else{
+				return null;
+			}
 			//Catch errors
 		} catch(InputMismatchException e) { //Manage when receiving a null, so map is not lost
 			System.err.println("Invalid input. Please enter valid numeric values.");
@@ -124,10 +161,75 @@ public class Gaming {
 	}
 	
 	//Flag a mine, flags=mines
-	public static char[][] flagMine(char usermap[][], char map[][], MapCreation fullMap) { //add a mine and flag counter, if mines=0 win, if flags=0 and mines !=0 continue without saying, might need to add "truemines"
+	public static char[][] flagMine(char usermap[][], char map[][], MapCreation fullMap, int flags, int row, int col) { //Add trueMines (number of mines not currently flagged)
+	Scanner sc=new Scanner(System.in);
+	
+	try {
+		boolean flagged=true;
+	// Only flag if the tile is not revealed		
+		if (usermap[row][col] == '-') { 
+			usermap[row][col] = 'M';
+			System.out.println();
+			PrintMap(usermap);
+			System.out.println();
+		} else if (usermap[row][col]=='M'){
+			System.out.println();
+			System.out.println("That tile is already flagged.");
+			System.out.println();
+			flagged=false;
+		}else {
+			System.out.println();
+			System.out.println("You can only flag unrevealed tiles.");
+			System.out.println();
+			flagged=false;
+		}
+		if(flagged==true){ //if was able to use flag return map
+			return usermap;
+		} else{ //if not able to use flag return null, so the play isn't saved and no flag is used
+			return null;
+		}
 		
+		//Catch errors
+	} catch(InputMismatchException e) { //Manage when receiving a null, so map is not lost
+		System.err.println("Invalid input. Please enter valid numeric values.");
+		return null;
+	} catch(ArrayIndexOutOfBoundsException e){
+		System.err.println("The coordinates are out of bounds, try again.");
+		return null;
+	}
+	}
+
+	//unflag
+	public static char[][] unFlagTile(char usermap[][], int flags, int row, int col){
+		Scanner sc=new Scanner(System.in);
+	try {
+		boolean flagged=true;
+	// Only if tile is flagged	
+		if (usermap[row][col] == 'M') { 
+			usermap[row][col] = '-';
+			System.out.println();
+			PrintMap(usermap);
+			System.out.println();
+		} else {
+			System.out.println();
+			System.out.println("You can only remove the flag from flagged tiles.");
+			System.out.println();
+			flagged=false;
+		}
+		if(flagged==true){ //if was able to remove flag return map
+			return usermap;
+		} else{ //if not able to remove flag return null, so the play isn't saved and no flag is given
+			return null;
+		}
 		
-		return usermap;
+		//Catch errors
+	} catch(InputMismatchException e) { //Manage when receiving a null, so map is not lost
+		System.err.println("Invalid input. Please enter valid numeric values.");
+		return null;
+	} catch(ArrayIndexOutOfBoundsException e){
+		System.err.println("The coordinates are out of bounds, try again.");
+		return null;
+	}
 	}
 	
 	//Counts how many mines are in a map
