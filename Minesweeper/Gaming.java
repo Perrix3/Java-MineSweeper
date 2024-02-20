@@ -21,8 +21,12 @@ public class Gaming {
 		int mines=countMines(fullMap.getMap());
 		//Creates "flags" variable, to see how many flags are left to be placed
 		int flags=mines;
+		//TrueMines, if it reaches 0, then you win
+		int TrueMines=mines;
+		//Boolean to check if it won
+		boolean hasWon=false;
 		//Game loop, asks what the user wants to do, and does it
-		while(game==true && fullMap.getLost()==false) {
+		while(game==true && fullMap.getLost()==false && hasWon==false) {
 			try {
 				//ask what they want to do and if it's not between 1 and 3 ask again
 				int action;
@@ -62,6 +66,7 @@ public class Gaming {
 						flags--;
 						if (fullMap.getMap()[row][col]=='x') {
 							//TrueMines
+							TrueMines--;
 						}
 					} else{
 						System.out.println("That tile couldn't be flagged or an error occurred while saving your last play.");
@@ -80,6 +85,7 @@ public class Gaming {
 						flags++;
 						if (fullMap.getMap()[roww][coll]=='x') {
 							//Add a TrueMine
+							TrueMines++;
 						}
 					} else{
 						System.out.println("Wasn't able to remove a flag from that tile or an error occurred while saving your last play.");
@@ -102,6 +108,16 @@ public class Gaming {
 					System.out.println();
 					System.err.println("You lost.");
 					System.out.println();
+				}
+				if(TrueMines==0){
+					System.out.println();
+					System.out.println("Congratulations, you flagged all the mines!");
+					System.out.println();
+					hasWon=true;
+					System.out.println("Here is the full map: ");
+					PrintMap(fullMap.getMap());
+					System.out.println();
+					//ADD A VICTORY
 				}
 			} catch(InputMismatchException e) {
 				System.err.println("Invalid input. Please enter valid numeric values.");
@@ -166,20 +182,27 @@ public class Gaming {
 	
 	try {
 		boolean flagged=true;
-	// Only flag if the tile is not revealed		
-		if (usermap[row][col] == '-') { 
-			usermap[row][col] = 'M';
+	// Only flag if the tile is not revealed	
+		if(flags>0){	
+			if (usermap[row][col] == '-') { 
+				usermap[row][col] = 'M';
+				System.out.println();
+				PrintMap(usermap);
+				System.out.println();
+			} else if (usermap[row][col]=='M'){
+				System.out.println();
+				System.out.println("That tile is already flagged.");
+				System.out.println();
+				flagged=false;
+			}else {
+				System.out.println();
+				System.out.println("You can only flag unrevealed tiles.");
+				System.out.println();
+				flagged=false;
+			}
+		} else{
 			System.out.println();
-			PrintMap(usermap);
-			System.out.println();
-		} else if (usermap[row][col]=='M'){
-			System.out.println();
-			System.out.println("That tile is already flagged.");
-			System.out.println();
-			flagged=false;
-		}else {
-			System.out.println();
-			System.out.println("You can only flag unrevealed tiles.");
+			System.out.println("Sorry, you are out of flags.");
 			System.out.println();
 			flagged=false;
 		}
