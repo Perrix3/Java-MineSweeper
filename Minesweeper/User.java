@@ -17,7 +17,7 @@ public class User {
 	
     //getters
     public String getNombre(){
-        return nombre;
+        return name;
     }
     public int getAttempts(){
         return attempts;

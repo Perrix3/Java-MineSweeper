@@ -8,12 +8,14 @@ public class MapCreation {
 	private int mines;
 	private char[][] map;
 	Random rand = new Random();
+	boolean lost;
 	
 //Constructor
 	public MapCreation(int row, int col, int mines) {
 		this.mines=mines;
 		this.map = new char[row][col];
 		fill();
+		lost=false;
 	}
 	
 	//Getters
@@ -22,6 +24,20 @@ public class MapCreation {
 	}
 	public char[][] getMap(){
 		return map;
+	}
+	public boolean getLost(){
+		return lost;
+	}
+	public int getRows(){
+		return map.length;
+	}
+	public int getColumns(){
+		return map[0].length;
+	}
+
+	//Lost game
+	public void lost(){
+		lost=true;
 	}
 	
 //Fills the map

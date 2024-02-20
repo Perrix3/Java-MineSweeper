@@ -5,24 +5,24 @@ import java.util.Scanner;
 
 public class Gaming {	
 	
-	public static void gameMenu(char map[][]) {
+	public static void gameMenu(MapCreation fullMap) {
 		Scanner sc=new Scanner(System.in);
 		boolean game=true;
 		//Create "usermap", the map the user will see
-		char[][] usermap = new char[map.length][map[0].length];
+		char[][] usermap = new char[fullMap.getRows()][fullMap.getColumns()];
 		for(int i=0;i<usermap.length;i++){
 			for(int j=0;j<usermap[i].length;j++){
 				usermap[i][j]='-';
 			}
 		}
 		//temp map to check if it came back null
-		char[][] tempmap = new char[map.length][map[0].length];
+		char[][] tempmap = new char[fullMap.getRows()][fullMap.getColumns()];
 		//Counts the mines in a map, so it can be used to see if game is won
-		int mines=countMines(map);
+		int mines=countMines(fullMap.getMap());
 		//Creates "flags" variable, to see how many flags are left to be placed
 		int flags=mines;
 		//Game loop, asks what the user wants to do, and does it
-		while(game==true) {
+		while(game==true && fullMap.getLost()==false) {
 			try {
 				//ask what they want to do and if it's not between 1 and 3 ask again
 				int action;
@@ -41,7 +41,7 @@ public class Gaming {
 				//switch for possible actions user might want to do
 				switch(action) {
 				case 1: //Reveal a tile
-					tempmap=revealTile(usermap, map); //add a temp array, so if it comes back as null the map is not lost?
+					tempmap=revealTile(usermap, fullMap.getMap(), fullMap); //add a temp array, so if it comes back as null the map is not lost?
 					if(tempmap!=null){
 						usermap=tempmap;
 					} else{
@@ -50,7 +50,7 @@ public class Gaming {
 					}
 				break;
 				case 2: //Flags a mine
-					tempmap=flagMine(usermap, map);
+					tempmap=flagMine(usermap, fullMap.getMap(), fullMap);
 					if(tempmap!=null){
 						usermap=tempmap;
 						flags--;
@@ -60,13 +60,19 @@ public class Gaming {
 					}
 				break;
 				case 3: //Prints map data
-					System.out.println("The minefield has "+map.length+" rows, "+map[0].length+" columns, "+mines+" mines, and you have "+flags+" flags left.");
+					System.out.println("The minefield has "+fullMap.getRows()+" rows, "+fullMap.getColumns()+" columns, "+mines+" mines, and you have "+flags+" flags left.");
 					System.out.println();
 				break;
 				case 4:
 					System.out.println("Leaving the game...");
 					game=false;
 				break;
+				}
+				if(fullMap.getLost()==true){
+					//Add loss to user
+					System.out.println();
+					System.err.println("You lost.");
+					System.out.println();
 				}
 			} catch(InputMismatchException e) {
 				System.err.println("Invalid input. Please enter valid numeric values.");
@@ -77,7 +83,7 @@ public class Gaming {
 	}
 
 	//Reveal the value of a tile
-	public static char[][] revealTile(char usermap[][], char map[][]) {
+	public static char[][] revealTile(char usermap[][], char map[][], MapCreation fullMap) {
 		Scanner sc=new Scanner(System.in);
 		//maybe add a while so it doesn't exit if you are out of bounds or write a letter?
 		try {
@@ -94,7 +100,7 @@ public class Gaming {
 				System.err.println("BOOM!");
 				System.out.println("Seems like you hit a mine.");
 				//Add a loss
-
+				fullMap.lost();
 			} else if (map[row][col]==0) { //0, check all around and reveal them
 				usermap[row][col]=map[row][col]; //Reveal all tiles in it's radius, careful with being out of bounds of the array
 				//Maybe add a function that reveals if it's 0? so it can be looped easier
@@ -118,7 +124,7 @@ public class Gaming {
 	}
 	
 	//Flag a mine, flags=mines
-	public static char[][] flagMine(char usermap[][], char map[][]) { //add a mine and flag counter, if mines=0 win, if flags=0 and mines !=0 continue without saying, might need to add "truemines"
+	public static char[][] flagMine(char usermap[][], char map[][], MapCreation fullMap) { //add a mine and flag counter, if mines=0 win, if flags=0 and mines !=0 continue without saying, might need to add "truemines"
 		
 		
 		return usermap;

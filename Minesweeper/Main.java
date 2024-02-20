@@ -31,7 +31,7 @@ public class Main {
 					System.out.println();
 				}
 				
-				MapCreation map = null; //Create variable outside
+				MapCreation fullMap = null; //Create variable outside
 				
 				switch(act) {
 				case 1:
@@ -53,13 +53,13 @@ public class Main {
 						//Switch to create map
 							switch(dif) {
 							case 1:
-								map=new MapCreation(8, 10, 15);
+								fullMap=new MapCreation(8, 10, 15);
 							break;
 							case 2:
-								map=new MapCreation(14, 18, 40);
+								fullMap=new MapCreation(14, 18, 40);
 							break;
 							case 3:
-								map=new MapCreation(20, 24, 100);
+								fullMap=new MapCreation(20, 24, 100);
 							break;
 							case 4:
 								System.out.print("How many rows do you want the map to have? ");
@@ -70,14 +70,14 @@ public class Main {
 								System.out.println();
 								System.out.print("how many mines should there be? ");
 								int mines=sc.nextInt();
-								map=new MapCreation(rows, cols, mines);
+								fullMap=new MapCreation(rows, cols, mines);
 							break;
 							}
 							//If map is valid it prints it
-							if(map != null) {
-								map.PrintMap();
+							if(fullMap.getMap() != null) {
+								fullMap.PrintMap();
 								loopy=false;
-								Gaming.gameMenu(map.getMap()); //Maybe need to push map[][] to use it inside
+								Gaming.gameMenu(fullMap); //Maybe need to push map to use it inside
 							} else {
 								System.out.println("Map creation failed.");
 								System.out.println();
