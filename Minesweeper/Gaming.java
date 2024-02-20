@@ -40,7 +40,7 @@ public class Gaming {
 				}
 				//switch for possible actions user might want to do
 				switch(action) {
-				case 1:
+				case 1: //Reveal a tile
 					tempmap=revealTile(usermap, map); //add a temp array, so if it comes back as null the map is not lost?
 					if(tempmap!=null){
 						usermap=tempmap;
@@ -49,16 +49,17 @@ public class Gaming {
 						System.out.println();
 					}
 				break;
-				case 2:
+				case 2: //Flags a mine
 					tempmap=flagMine(usermap, map);
 					if(tempmap!=null){
 						usermap=tempmap;
+						flags--;
 					} else{
 						System.out.println("An error occurred while saving your last play.");
 						System.out.println();
 					}
 				break;
-				case 3:
+				case 3: //Prints map data
 					System.out.println("The minefield contains "+map.length+" rows, "+map[0].length+" columns,  "+mines+" mines, and you have "+flags+" flags left.");
 					System.out.println();
 				break;
@@ -97,7 +98,7 @@ public class Gaming {
 
 			} else if (map[row][col]==0) { //0, check all around and reveal them
 				usermap[row][col]=map[row][col]; //Reveal all tiles in it's radius, careful with being out of bounds of the array
-
+				//Maybe add a function that reveals if it's 0? so it can be looped easier
 			} else{ //Default, just reveal this tile
 				usermap[row][col]=map[row][col];
 			}
@@ -118,7 +119,7 @@ public class Gaming {
 	}
 	
 	//Flag a mine, flags=mines
-	public static char[][] flagMine(char usermap[][], char map[][]) { //add a mine counter, and flag counter, if mines=0 win, if flags=0 and mines !=0 continue without saying
+	public static char[][] flagMine(char usermap[][], char map[][]) { //add a mine and flag counter, if mines=0 win, if flags=0 and mines !=0 continue without saying, might need to add "truemines"
 		
 		
 		return usermap;
