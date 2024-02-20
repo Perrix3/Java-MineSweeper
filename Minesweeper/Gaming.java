@@ -8,6 +8,7 @@ public class Gaming {
 	public static void gameMenu(char map[][]) {
 		Scanner sc=new Scanner(System.in);
 		boolean game=true;
+		//Create "usermap", the map the user will see
 		char[][] usermap = new char[map.length][map[0].length];
 		for(int i=0;i<usermap.length;i++){
 			for(int j=0;j<usermap[i].length;j++){
@@ -16,6 +17,11 @@ public class Gaming {
 		}
 		//temp map to check if it came back null
 		char[][] tempmap = new char[map.length][map[0].length];
+		//Counts the mines in a map, so it can be used to see if game is won
+		int mines=countMines(map);
+		//Creates "flags" variable, to see how many flags are left to be placed
+		int flags=mines;
+		//Game loop, asks what the user wants to do, and does it
 		while(game==true) {
 			try {
 				//ask what they want to do and if it's not between 1 and 3 ask again
@@ -23,7 +29,8 @@ public class Gaming {
 				System.out.println("¿What do you want to do?");
 				System.out.println("1. Reveal a tile.");
 				System.out.println("2. Flag a mine.");
-				System.out.println("3. Leave the game.");
+				System.out.println("3. Remind information.");
+				System.out.println("4. Leave the game.");
 				action=sc.nextInt();
 				System.out.println();
 				while(action>3 || action<1){
@@ -52,6 +59,10 @@ public class Gaming {
 					}
 				break;
 				case 3:
+					System.out.println("The minefield contains "+map.length+" rows, "+map[0].length+" columns,  "+mines+" mines, and you have "+flags+" flags left.");
+					System.out.println();
+				break;
+				case 4:
 					System.out.println("Leaving the game...");
 					game=false;
 				break;
@@ -96,6 +107,7 @@ public class Gaming {
 			MapCreation.PrintMap(usermap);
 			System.out.println();
 			return usermap;
+			//Catch errors
 		} catch(InputMismatchException e) { //Manage when receiving a null, so map is not lost
 			System.err.println("Invalid input. Please enter valid numeric values.");
 			return null;
@@ -105,11 +117,23 @@ public class Gaming {
 		}
 	}
 	
+	//Flag a mine, flags=mines
 	public static char[][] flagMine(char usermap[][], char map[][]) { //add a mine counter, and flag counter, if mines=0 win, if flags=0 and mines !=0 continue without saying
 		
 		
 		return usermap;
 	}
 	
-	
+	//Counts how many mines are in a map
+	public static int countMines(char map[][]){
+		int mines=0;
+		for(int i=0;i<map.length;i++){
+			for(int j=0;j<map[i].length;j++){
+				if(map[i][j]=='x'){
+					mines++;
+				}
+			}
+		}
+		return mines;
+	}
 }
