@@ -75,7 +75,7 @@ public class Main {
 							}
 							//If map is valid it prints it
 							if(fullMap.getMap() != null) {
-								fullMap.PrintMap();
+								//fullMap.PrintMap();					//UNCOMMENT TO PRINT SOLVED MAP AT THE START
 								loopy=false;
 								Gaming.gameMenu(fullMap); //Maybe need to push map to use it inside
 							} else {
@@ -90,7 +90,7 @@ public class Main {
 					}
 				break;
 				case 2:
-					
+					//When database is added, this will send user to a place where it can ask for data
 				break;
 				case 3:
 					loop=false;
