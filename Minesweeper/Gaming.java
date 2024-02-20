@@ -152,7 +152,7 @@ public class Gaming {
 				fullMap.lost();
 			} else if (map[row][col]=='0') { //0, check all around and reveal them
 				revealAdjacentTiles(usermap, map, row, col);
-				
+
 			} else{ //Default, just reveal this tile
 				usermap[row][col]=map[row][col];
 			}
@@ -177,9 +177,7 @@ public class Gaming {
 	}
 	
 	//Flag a mine, flags=mines
-	public static char[][] flagMine(char usermap[][], char map[][], MapCreation fullMap, int flags, int row, int col) { //Add trueMines (number of mines not currently flagged)
-	Scanner sc=new Scanner(System.in);
-	
+	public static char[][] flagMine(char usermap[][], char map[][], MapCreation fullMap, int flags, int row, int col) { //Add trueMines (number of mines not currently flagged)	
 	try {
 		boolean flagged=true;
 	// Only flag if the tile is not revealed	
@@ -224,7 +222,6 @@ public class Gaming {
 
 	//unflag
 	public static char[][] unFlagTile(char usermap[][], int flags, int row, int col){
-		Scanner sc=new Scanner(System.in);
 	try {
 		boolean flagged=true;
 	// Only if tile is flagged	
