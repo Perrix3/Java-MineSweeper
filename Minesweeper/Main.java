@@ -21,12 +21,13 @@ public class Main {
 			try {
 				int act;
 				System.out.println("What do you want to do?");
-				System.out.println("1. Play MineSweeper.");
-				System.out.println("2. Check scores.");
-				System.out.println("3. Exit.");
+				System.out.println("1. Login (Optional, to keep stats).");
+				System.out.println("2. Play MineSweeper.");
+				System.out.println("3. Check scores.");
+				System.out.println("4. Exit.");
 				act= sc.nextInt();
-				while(act>3 || act<1){
-					System.out.print("The number must be between 1 and 3, please try again. ");
+				while(act>4 || act<1){
+					System.out.print("The number must be between 1 and 4, please try again. ");
 					act=sc.nextInt();
 					System.out.println();
 				}
@@ -35,6 +36,9 @@ public class Main {
 				
 				switch(act) {
 				case 1:
+					
+				break;
+				case 2:
 					//Boolean to loop again if failed
 					boolean loopy=true;
 					
@@ -89,10 +93,10 @@ public class Main {
 						}
 					}
 				break;
-				case 2:
+				case 3:
 					//When database is added, this will send user to a place where it can ask for data
 				break;
-				case 3:
+				case 4:
 					loop=false;
 					System.out.println("Exiting...");
 				break;

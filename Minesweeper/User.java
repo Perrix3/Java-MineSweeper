@@ -1,5 +1,7 @@
 package Minesweeper;
 
+import java.util.Scanner;
+
 public class User {
 
 	private String name;
@@ -41,4 +43,23 @@ public class User {
     public void wins(){
         wins++;
     }
+
+    //ask login
+    public static User Login(){
+        try{
+            Scanner sc=new Scanner(System.in);
+
+            //Save username
+            System.out.print("What is your username? ");
+            String Name=sc.nextLine();
+
+            //Add conection to database and take the data from it
+            //User user=new User(Name, Attempts, Loses, Wins);
+            return user;
+        } catch(exception e){
+            return null;
+        }
+    }
+
+    //Add a function that updates the information in database, might be in another class
 }
