@@ -4,22 +4,22 @@ import java.util.Scanner;
 
 public class User {
 
-	private String name;
+	private String username;
 	private int attempts;
 	private int losses;
 	private int wins;
 	
 	
-	public User(String name, int attempts, int losses, int wins) {
-		this.name=name;
+	public User(String username, int attempts, int losses, int wins) {
+		this.username=username;
 		this.attempts=attempts;
 		this.losses=losses;
 		this.wins=wins;
 	}
 	
     //getters
-    public String getNombre(){
-        return name;
+    public String getUsername(){
+        return username;
     }
     public int getAttempts(){
         return attempts;
@@ -44,12 +44,12 @@ public class User {
         wins++;
     }
 
-    //ask login
+    //ask login, if user not saved, ask if they want to be saved
     public static User Login(){
         try{
             Scanner sc=new Scanner(System.in);
 
-            //Save username
+            //Ask username
             System.out.print("What is your username? ");
             String Name=sc.nextLine();
 
