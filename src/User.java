@@ -1,4 +1,4 @@
-package Minesweeper;
+package src;
 
 import java.util.Scanner;
 
@@ -45,7 +45,7 @@ public class User {
     }
 
     //ask login, if user not saved, ask if they want to be saved
-    public static User Login(){
+    /* public static User Login(User user){
         try{
             Scanner sc=new Scanner(System.in);
 
@@ -56,10 +56,10 @@ public class User {
             //Add conection to database and take the data from it
             //User user=new User(Name, Attempts, Loses, Wins);
             return user;
-        } catch(exception e){
+        } catch(exception  e){
             return null;
         }
-    }
+    }*/
 
     //Add a function that updates the information in database, might be in another class
 }
