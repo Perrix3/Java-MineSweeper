@@ -6,3 +6,5 @@ CREATE TABLE IF NOT EXISTS Users(
     Losses INT NOT NULL,
     PRIMARY KEY (Userid)
 ); 
+--Change tables, so i can have more
+--User table, Score table, and idk one more
