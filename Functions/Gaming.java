@@ -1,4 +1,4 @@
-package src.Functions;
+package Functions;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

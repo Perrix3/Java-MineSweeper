@@ -1,9 +1,9 @@
-package src.Main;
+package UI;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import src.Functions.*;
+import Functions.*;
 
 public class Main {
 	
