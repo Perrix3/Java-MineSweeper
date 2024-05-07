@@ -1,7 +1,9 @@
-package src;
+package src.Functions;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import src.MapCreation;
 
 public class Gaming {	
 	

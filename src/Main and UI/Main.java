@@ -3,6 +3,8 @@ package src;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import src.Functions.Gaming;
+
 public class Main {
 	
 	//ADD CUSTOM MODE? WHERE YOU CHOOSE HOW MANY MINES AND HOW BIG THE MAP IS
@@ -11,6 +13,8 @@ public class Main {
 	//Maybe add another main class that is the main of the main, so it has a switch for if you want to play or check scores, or stop playing?
 	//Create "user" class to save stats, so it can be saved as "user" object
 	//Change map creation to an object, so you call the constructor with the data you want to introduce
+
+	//For graphics, maybe create a frame, and add 1 panel for each window needed, when needed change visibility of window? And add whatever is needed for that window on that pannel.
 	
 	public static void main(String[] args) {
 
@@ -106,7 +110,7 @@ public class Main {
 				System.out.println();
 				sc.nextLine();
 			}
-		}
+		} //TEST
 	}
 
 }
