@@ -1,9 +1,9 @@
-package src;
+package src.Main;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import src.Functions.Gaming;
+import src.Functions.*;
 
 public class Main {
 	
