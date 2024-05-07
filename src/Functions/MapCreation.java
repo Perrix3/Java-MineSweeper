@@ -1,4 +1,4 @@
-package Functions;
+package src.Functions;
 
 import java.util.Random;
 
